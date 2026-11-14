@@ -25,6 +25,12 @@ const svgrConfig = {
   replaceAttrValues: {
     "#000": "currentColor",
     "#1E1E1E": "currentColor"
+  },
+  svgoConfig: {
+    plugins: [
+      { name: 'preset-default', params: { overrides: { removeViewBox: false } } },
+      { name: 'removeAttrs', params: { attrs: 'class' } }
+    ]
   }
 }
 
