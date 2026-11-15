@@ -1,4 +1,5 @@
 src/icons
+src/index.ts
 *.tgz
 
 # Logs

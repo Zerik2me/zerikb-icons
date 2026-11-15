@@ -1,6 +1,10 @@
 {
   "name": "@zerikb/icons",
   "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Zerik2me/zerikb-icons"
+  },
   "description": "React Icon Library",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
