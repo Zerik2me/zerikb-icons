@@ -1,4 +1,4 @@
-function template({imports, interfaces, componentName, props, jsx, exports}, {tpl}) {
+function template({imports, interfaces, componentName, props, jsx}, {tpl}) {
   return tpl`
     ${imports}
     import type { IconProps } from "../types";
@@ -6,7 +6,8 @@ function template({imports, interfaces, componentName, props, jsx, exports}, {tp
 
     const ${componentName} = ({size = "1em", color = "currentColor", ...props }: IconProps, ref: Ref<SVGSVGElement> ) => ${jsx};
 
-    ${exports}
+    const ForwardRef = /* @__PURE__ */ forwardRef(${componentName});
+    export { ForwardRef as ${componentName} };
     `
 }
 

@@ -35,26 +35,50 @@ const svgrConfig = {
 }
 
 async function main() {
-
   const cPath = path.join(__dirname, '..', 'svg')
-  
-  const fileNames = await readdir(cPath)
+  const lucideDir = path.join(__dirname, '..', 'node_modules', 'lucide-static', 'icons')
 
+  const fileNames = await readdir(cPath)
   const svg = fileNames.filter(f => f.endsWith('.svg'))
-  
   const names = svg.map(n => path.parse(n).name).sort()
 
   const outDir = path.join(__dirname, '..', 'src', 'icons')
+
+  const content = (await readFile(path.join(__dirname,'..', 'lucide-icons.txt'), 'utf-8')).split('\n').map(line => line.trim()).filter(line => line!=="")
+
+  const sources = new Map()
+
+  for(const n of content){
+    sources.set(n, path.join(lucideDir, `${n}.svg`))
+  }
+
+  for(const n of names){
+    if (sources.has(n)){
+      console.log(`"${n}" exists in Lucide, using yours`)
+    }
+    sources.set(n, path.join(cPath, `${n}.svg`))
+  }
+  
 
   await rm(outDir, {recursive: true, force: true})
   await mkdir(outDir, {recursive: true})
 
   const exportLines = []
   
-  for (const n of names) {
+  const seen = new Map()
+
+  for (const [n, filePath] of [...sources].sort(([a], [b]) => a.localeCompare(b))) {
     const componentNames = toComponentName(n)
+
+    if (seen.has(componentNames)){
+      console.log(`Both filenames will be ${componentNames}`)
+      process.exitCode = 1
+      continue
+    }
+
+    seen.set(componentNames, n)
     try {
-      const svgText = await readFile(`${cPath}/${n}.svg`, 'utf-8')
+      const svgText = await readFile(filePath, 'utf-8')
 
       const problems = [...validateName(n), ...validateSvg(svgText)]
       

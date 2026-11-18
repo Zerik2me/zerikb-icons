@@ -34,7 +34,8 @@
   },
   "files": [
     "dist",
-    "LICENSE"
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md"
   ],
   "publishConfig": {
     "access": "public"
@@ -44,7 +45,7 @@
     "@svgr/plugin-jsx": "^8.1.0",
     "@svgr/plugin-svgo": "^8.1.0",
     "@types/react": "^19.3.0",
-    "lucide-static": "^1.70.0",
+    "lucide-static": "1.73.0",
     "react": "^19.3.1",
     "svgo": "^4.1.0",
     "tsup": "^9.0.0",
